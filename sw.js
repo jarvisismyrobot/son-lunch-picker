@@ -1,5 +1,5 @@
 /* 今日食咩？ sw.js v1.0 */
-const CACHE = 'lunch-v2';
+const CACHE = 'lunch-v3';
 const IMG_CACHE = 'lunch-img-v1';
 const CORE = ['./', './index.html', './manifest.json', './images.js'];
 

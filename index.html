@@ -88,6 +88,7 @@
   .confetti { position:absolute; width:10px; height:14px; top:-20px; animation:fall linear forwards; border-radius:2px; }
   @keyframes fall { to { transform:translateY(105vh) rotate(720deg); } }
   .browse-sec { font-size:14px; font-weight:800; color:var(--muted); margin-top:4px; }
+  .spice-note { font-size:12px; color:var(--muted); margin:2px 0 0; }
   .browse-row { background:#fff; border-radius:14px; padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
   .browse-row .be { font-size:30px; }
   .browse-row .bi { flex:1; min-width:0; }
@@ -151,7 +152,7 @@
 
   <!-- ===== 全部睇晒 ===== -->
   <div class="screen" id="s-browse">
-    <div class="appbar"><h1>📋 睇晒有咩</h1><p id="browse-count"></p></div>
+    <div class="appbar"><h1>📋 睇晒有咩</h1><p id="browse-count"></p><p class="spice-note">🌶️＝有少少辣，嗌嗰陣可以叫「少辣」／「走辣」</p></div>
     <div class="body-pad" id="browse-body"></div>
   </div>
 
@@ -198,43 +199,68 @@ const IMG_URL = (p, s) => "https://image.pollinations.ai/prompt/" + encodeURICom
 /* 預先 gen 好嘅圖（images.js bundle 入 app）優先用，冇先至即時去 Pollinations 攞 */
 const IMG = (p, s) => (typeof DISH_IMGS !== "undefined" && DISH_IMGS[String(s)]) || IMG_URL(p, s);
 const DISHES = [
-  {id:"gyudon-sukiya", shop:"sukiya", name:"牛丼（並）", price:"~$45", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("gyudon japanese beef rice bowl",11), reason:"同 Pepper Lunch 一樣牛肉撈飯，冇咁熱氣。", tip:"💡 叫少汁"},
-  {id:"kimchi-sukiya", shop:"sukiya", name:"泡菜牛丼", price:"~$52", type:"飯", fast:1, emoji:"🍚", img:IMG("kimchi beef rice bowl",12), reason:"加泡菜開胃，唔使落咁多汁。", tip:"💡 泡菜本身夠味"},
-  {id:"hainan-pulao", shop:"pulao", name:"海南雞飯", price:"~$60", type:"飯", emoji:"🍚", img:IMG("hainanese chicken rice",14), reason:"有肉有飯有湯，食得飽，唔熱氣。", tip:"💡 叫走雞皮"},
-  {id:"laksa-pulao", shop:"pulao", name:"叻沙", price:"~$62", type:"麵", emoji:"🍜", img:IMG("laksa noodle soup",15), reason:"想食濃味嗰日，呢個啱。", tip:"💡 湯唔好飲晒"},
-  {id:"chasiu-siu", shop:"siu", name:"叉燒飯", price:"$50以下", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("char siu bbq pork rice cantonese style",16), reason:"脆卜卜，頂到想食脆嘢嘅癮。", tip:"💡 雙拼叉燒＋白切雞"},
-  {id:"whitechk-siu", shop:"siu", name:"白切雞飯", price:"$50以下", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("poached white chicken with rice cantonese",17), reason:"滑雞唔熱氣，平靚正。", tip:"💡 薑蓉唔好點咁多"},
-  {id:"whitechk-cdc", shop:"cdc", name:"白切雞飯", price:"~$50", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("poached white chicken with rice cantonese",17), reason:"穩陣，唔使諗。", tip:"💡 唔好叫炸豬扒"},
-  {id:"porkpatty-cdc", shop:"cdc", name:"蒸肉餅飯", price:"~$48", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("steamed minced pork patty with rice",18), reason:"蒸嘢唔熱氣，送飯一流。", tip:"💡 加碟菜心"},
-  {id:"cornpork-cdc", shop:"cdc", name:"粟米肉粒飯", price:"~$46", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("corn and pork with rice hong kong cafe",19), reason:"有粟米有肉，唔會乾。", tip:"💡 汁撈飯啱啱好"},
-  {id:"luroufan-teawood", shop:"teawood", name:"滷肉飯＋燙青菜", price:"~$60", type:"飯", emoji:"🍚", img:IMG("taiwanese braised pork rice",20), reason:"滷肉香，配菜唔會得個肥字。", tip:"💡 滷肉汁叫少啲"},
-  {id:"chickrice-teawood", shop:"teawood", name:"雞肉飯", price:"~$58", type:"飯", emoji:"🍚", img:IMG("taiwanese shredded chicken rice",21), reason:"雞絲嫩，唔漏。", tip:"💡 加隻滷蛋"},
-  {id:"terichick-niju", shop:"niju", name:"照燒雞扒飯", price:"~$55", type:"飯", fast:1, emoji:"🍚", img:IMG("japanese teriyaki chicken with rice",22), reason:"想食肉嗰陣，呢個夠滿足。", tip:"💡 照燒汁夠味，唔使加豉油"},
-  {id:"beefrice-niju", shop:"niju", name:"牛肉飯", price:"~$55", type:"飯", fast:1, emoji:"🍚", img:IMG("gyudon japanese beef rice bowl",11), reason:"同牛丼差唔多，多個選擇。", tip:"💡 七味粉落少少"},
-  {id:"congee-yatjuk", shop:"yatjuk", name:"及第粥", price:"~$45", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("century egg and pork congee",23), reason:"熱辣辣一碗，唔會唔夠飽。", tip:"💡 加腸粉都係 $50 樓下"},
-  {id:"fishnoodle-yatjuk", shop:"yatjuk", name:"生菜魚肉湯米", price:"~$48", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("fish fillet noodle soup with lettuce",24), reason:"有湯有菜，清得嚟有味。", tip:"💡 湯底唔好飲晒"},
-  {id:"mixian-tamjai", shop:"tamjai", name:"米線（小辣）", price:"~$50", type:"麵", cheap:1, emoji:"🍜", img:IMG("yunnan mixian rice noodle soup",25), reason:"自己夾餸，唔會中伏。", tip:"💡 小辣＋加菜"},
-  {id:"tomato-tamjai", shop:"tamjai", name:"蕃茄湯米線", price:"~$52", type:"麵", cheap:1, emoji:"🍜", img:IMG("tomato noodle soup",27), reason:"蕃茄湯開胃，唔食辣都得。", tip:"💡 唔辣就揀蕃茄湯底"},
-  {id:"tonkotsu-okayama", shop:"okayama", name:"豚骨拉麵", price:"~$65", type:"麵", emoji:"🍜", img:IMG("tonkotsu ramen",31), reason:"拉麵癮發作嘅正路選擇。", tip:"💡 湯唔好飲晒，留返半碗"},
-  {id:"shoyu-okayama", shop:"okayama", name:"醬油拉麵", price:"~$65", type:"麵", emoji:"🍜", img:IMG("shoyu ramen",32), reason:"比豚骨清，唔會咁漏。", tip:"💡 加隻糖心蛋"},
-  {id:"tomatopork-satay", shop:"satay", name:"鮮茄豬扒通粉", price:"~$55", type:"麵", emoji:"🍜", img:IMG("tomato pork chop macaroni soup hong kong style",33), reason:"茄汁開胃，唔漏。", tip:"💡 豬扒叫煎唔叫炸"},
-  {id:"luncheon-satay", shop:"satay", name:"餐蛋麵", price:"~$50", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("luncheon meat and egg noodles hong kong cafe",34), reason:"簡單，但唔係hea。", tip:"💡 餐肉唔好煎到燶"},
-  {id:"crossbridge-mxz", shop:"mxz", name:"過橋米線", price:"~$52", type:"麵", cheap:1, emoji:"🍜", img:IMG("crossing bridge yunnan rice noodles",26), reason:"料多，湯夠熱。", tip:"💡 先放肉，後放菜"},
-  {id:"sourmixian-mxz", shop:"mxz", name:"酸辣米線（小辣）", price:"~$52", type:"麵", cheap:1, emoji:"🍜", img:IMG("yunnan mixian rice noodle soup",25), reason:"酸辣開胃，天熱食啱。", tip:"💡 叫小辣就好"},
+  {id:"gyudon-sukiya", shop:"sukiya", name:"牛丼（並）", price:"~$47", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("japanese gyudon beef rice bowl",101), reason:"同 Pepper Lunch 一樣牛肉撈飯，冇咁熱氣。", tip:"💡 叫少汁"},
+  {id:"kimchi-sukiya", shop:"sukiya", name:"泡菜牛丼", price:"~$52", type:"飯", fast:1, spicy:1, emoji:"🍚", img:IMG("kimchi beef rice bowl",102), reason:"泡菜酸辣開胃，牛肉份量十足。", tip:"💡 叫少辣都得"},
+  {id:"curry-sukiya", shop:"sukiya", name:"咖哩牛肉飯", price:"~$52", type:"飯", fast:1, emoji:"🍚", img:IMG("japanese beef curry rice",103), reason:"日式咖哩甜甜地，唔會太刺激。", tip:"💡 撈飯一流"},
+  {id:"cheese-sukiya", shop:"sukiya", name:"芝士牛丼", price:"~$55", type:"飯", fast:1, emoji:"🍚", img:IMG("japanese beef rice bowl with melted cheese",104), reason:"芝士拉絲，牛肉控必試。", tip:"💡 趁熱食"},
+  {id:"hainan-pulao", shop:"pulao", name:"海南雞飯", price:"~$58", type:"飯", emoji:"🍚", img:IMG("hainanese chicken rice",105), reason:"有肉有飯有湯，食得飽，唔熱氣。", tip:"💡 叫走雞皮"},
+  {id:"laksa-pulao", shop:"pulao", name:"叻沙", price:"~$62", type:"麵", spicy:1, emoji:"🍜", img:IMG("malaysian laksa noodle soup",106), reason:"椰香濃湯，想食重口味嗰日啱晒。", tip:"💡 叫少辣，湯唔好飲晒"},
+  {id:"bkt-pulao", shop:"pulao", name:"肉骨茶飯", price:"~$62", type:"飯", emoji:"🍚", img:IMG("bak kut teh pork rib soup with rice",107), reason:"胡椒湯暖胃，排骨炆到腍。", tip:"💡 湯可以添"},
+  {id:"sgpfried-pulao", shop:"pulao", name:"星洲炒米粉", price:"~$55", type:"麵", emoji:"🍜", img:IMG("singapore fried rice vermicelli",108), reason:"咖哩香炒米粉，鑊氣十足。", tip:"💡 趁熱食"},
+  {id:"chasiu-siu", shop:"siu", name:"叉燒飯", price:"~$42", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("hong kong char siu barbecue pork rice",109), reason:"燒味檔即斬，蜜汁香。", tip:"💡 雙拼加燒肉"},
+  {id:"siuyuk-siu", shop:"siu", name:"燒肉飯", price:"~$45", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("cantonese crispy roast pork belly rice",110), reason:"燒肉脆皮，送飯一流。", tip:"💡 叫少汁"},
+  {id:"whitechk-siu", shop:"siu", name:"白切雞飯", price:"~$45", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("cantonese poached white chicken rice",111), reason:"滑雞唔熱氣，平靚正。", tip:"💡 薑蓉唔好點咁多"},
+  {id:"soychick-siu", shop:"siu", name:"豉油雞飯", price:"~$45", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("cantonese soy sauce chicken rice",112), reason:"豉油香滲入雞肉，唔使點醬。", tip:"💡 叫走雞皮"},
+  {id:"double-siu", shop:"siu", name:"叉燒燒肉雙拼飯", price:"~$50", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("cantonese bbq combo rice char siu siu yuk",113), reason:"一次過滿足兩個願望。", tip:"💡 餸多過飯先好食"},
+  {id:"porkpatty-cdc", shop:"cdc", name:"蒸肉餅飯", price:"~$48", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("cantonese steamed minced pork patty rice",114), reason:"蒸嘢唔熱氣，送飯一流。", tip:"💡 加碟菜心"},
+  {id:"cornpork-cdc", shop:"cdc", name:"粟米肉粒飯", price:"~$50", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("hong kong cafe corn diced pork rice",115), reason:"有粟米有肉，唔會乾。", tip:"💡 汁撈飯啱啱好"},
+  {id:"bakpork-cdc", shop:"cdc", name:"一哥焗豬扒飯", price:"~$58", type:"飯", emoji:"🍚", img:IMG("hong kong baked pork chop rice cheese",116), reason:"焗到芝士拉絲，招牌嚟。", tip:"💡 趁熱食"},
+  {id:"luroufan-teawood", shop:"teawood", name:"滷肉飯＋燙青菜", price:"~$48", type:"飯", cheap:1, emoji:"🍚", img:IMG("taiwanese braised pork rice",117), reason:"滷肉香，配菜唔會得個肥字。", tip:"💡 滷肉汁叫少啲"},
+  {id:"saltchick-teawood", shop:"teawood", name:"鹽酥雞飯", price:"~$55", type:"飯", emoji:"🍚", img:IMG("taiwanese salt pepper crispy chicken rice",118), reason:"鹽酥雞脆卜卜，台式風味。", tip:"💡 趁熱食"},
+  {id:"porkrib-teawood", shop:"teawood", name:"排骨飯", price:"~$52", type:"飯", emoji:"🍚", img:IMG("taiwanese braised pork ribs rice",119), reason:"排骨炆到腍，送飯正。", tip:"💡 叫多菜"},
+  {id:"lushui-teawood", shop:"teawood", name:"滷水雞髀飯", price:"~$55", type:"飯", emoji:"🍚", img:IMG("taiwanese marinated chicken leg rice",120), reason:"雞髀大隻，滷水入味。", tip:"💡 走雞皮"},
+  {id:"terichick-niju", shop:"niju", name:"照燒雞扒飯", price:"~$52", type:"飯", fast:1, emoji:"🍚", img:IMG("japanese teriyaki chicken rice",121), reason:"想食肉嗰陣，呢個夠滿足。", tip:"💡 照燒汁夠味，唔使加豉油"},
+  {id:"shogayaki-niju", shop:"niju", name:"豚肉生薑燒飯", price:"~$55", type:"飯", fast:1, emoji:"🍚", img:IMG("japanese ginger pork shogayaki rice",122), reason:"薑汁豬肉開胃，日式定食feel。", tip:"💡 撈飯食"},
+  {id:"oyako-niju", shop:"niju", name:"親子丼", price:"~$50", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("japanese oyako don chicken egg rice",123), reason:"滑蛋雞肉，暖笠笠。", tip:"💡 趁熱食"},
+  {id:"luncheonegg-taishing", shop:"taishing", name:"餐肉煎蛋飯", price:"~$50", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("hong kong luncheon meat fried egg rice",124), reason:"簡單，但唔係hea。", tip:"💡 唔好加太多豉油"},
+  {id:"yeungchow-taishing", shop:"taishing", name:"揚州炒飯", price:"~$55", type:"飯", fast:1, emoji:"🍚", img:IMG("yeung chow fried rice",125), reason:"鑊氣炒飯，粒粒分明。", tip:"💡 趁熱食"},
+  {id:"beefho-taishing", shop:"taishing", name:"乾炒牛河", price:"~$58", type:"飯", fast:1, emoji:"🍚", img:IMG("dry fried beef hor fun",126), reason:"乾炒牛河夠鑊氣，唔會太油。", tip:"💡 趁熱食"},
+  {id:"shrimpegg-taishing", shop:"taishing", name:"滑蛋蝦仁飯", price:"~$62", type:"飯", emoji:"🍚", img:IMG("cantonese scrambled egg shrimp rice",127), reason:"滑蛋蝦仁，鮮味十足。", tip:"💡 唔好加豉油"},
+  {id:"corndump-bafang", shop:"bafang", name:"玉米豬肉餃", price:"~$52", type:"飯", emoji:"🍚", img:IMG("steamed pork corn dumplings",128), reason:"一啖一隻，唔點豉油都夠味。", tip:"💡 黑醋落少少就夠"},
+  {id:"cabbagedump-bafang", shop:"bafang", name:"高麗菜豬肉餃", price:"~$52", type:"飯", emoji:"🍚", img:IMG("steamed pork cabbage dumplings",129), reason:"高麗菜爽脆，豬肉鮮甜。", tip:"💡 黑醋落少少就夠"},
+  {id:"chivedump-bafang", shop:"bafang", name:"韭菜豬肉餃", price:"~$52", type:"飯", emoji:"🍚", img:IMG("steamed pork chive dumplings",130), reason:"韭菜香，咬落多汁。", tip:"💡 黑醋落少少就夠"},
+  {id:"potsticker-bafang", shop:"bafang", name:"鍋貼", price:"~$38", type:"飯", cheap:1, emoji:"🍚", img:IMG("pan fried pork potstickers",131), reason:"煎到脆卜卜，頂到個脆癮。", tip:"💡 唔夠飽就轉水餃"},
+  {id:"congee-yatjuk", shop:"yatjuk", name:"及第粥", price:"~$42", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("cantonese pork offal congee",132), reason:"熱辣辣一碗，唔會唔夠飽。", tip:"💡 加腸粉都係 $50 樓下"},
+  {id:"centuryegg-yatjuk", shop:"yatjuk", name:"皮蛋瘦肉粥", price:"~$38", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("century egg lean pork congee",133), reason:"皮蛋香滑，瘦肉唔柴。", tip:"💡 加啲胡椒粉"},
+  {id:"fishnoodle-yatjuk", shop:"yatjuk", name:"生菜魚肉湯米", price:"~$45", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("fish fillet rice noodle soup lettuce",134), reason:"有湯有菜，清得嚟有味。", tip:"💡 湯底唔好飲晒"},
+  {id:"boat-yatjuk", shop:"yatjuk", name:"艇仔粥", price:"~$45", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("cantonese boat congee",135), reason:"料多，浮皮脆卜卜。", tip:"💡 趁熱食"},
+  {id:"tomato-tamjai", shop:"tamjai", name:"蕃茄湯米線", price:"~$52", type:"麵", cheap:1, emoji:"🍜", img:IMG("yunnan rice noodles tomato soup",136), reason:"蕃茄湯開胃，唔食辣都得。", tip:"💡 唔辣就揀蕃茄湯底"},
+  {id:"sauerkrautfish-tamjai", shop:"tamjai", name:"酸菜魚米線", price:"~$58", type:"麵", spicy:1, emoji:"🍜", img:IMG("yunnan pickled mustard fish noodles",137), reason:"酸菜開胃，魚片滑。", tip:"💡 叫少辣"},
+  {id:"mixian-tamjai", shop:"tamjai", name:"米線（小辣）", price:"~$50", type:"麵", cheap:1, spicy:1, emoji:"🍜", img:IMG("yunnan mixian noodle soup",138), reason:"自己夾餸，唔會中伏。", tip:"💡 小辣＋加菜"},
+  {id:"tonkotsu-okayama", shop:"okayama", name:"豚骨拉麵", price:"~$68", type:"麵", emoji:"🍜", img:IMG("tonkotsu ramen",139), reason:"拉麵癮發作嘅正路選擇。", tip:"💡 湯唔好飲晒，留返半碗"},
+  {id:"shoyu-okayama", shop:"okayama", name:"醬油拉麵", price:"~$65", type:"麵", emoji:"🍜", img:IMG("shoyu ramen",140), reason:"比豚骨清，唔會咁漏。", tip:"💡 加隻糖心蛋"},
+  {id:"yakisoba-okayama", shop:"okayama", name:"日式炒麵", price:"~$60", type:"麵", emoji:"🍜", img:IMG("japanese yakisoba noodles",141), reason:"炒麵乾身唔油，唔使飲湯。", tip:"💡 趁熱食"},
+  {id:"chashu-okayama", shop:"okayama", name:"叉燒拉麵", price:"~$72", type:"麵", emoji:"🍜", img:IMG("ramen with chashu pork slices",142), reason:"叉燒厚切，拉麵升級版。", tip:"💡 湯唔好飲晒"},
+  {id:"tomatopork-satay", shop:"satay", name:"鮮茄豬扒通粉", price:"~$52", type:"麵", emoji:"🍜", img:IMG("hong kong tomato pork chop macaroni",143), reason:"茄汁開胃，唔漏。", tip:"💡 豬扒叫煎唔叫炸"},
+  {id:"sataybeef-satay", shop:"satay", name:"沙嗲牛肉麵", price:"~$55", type:"麵", spicy:1, emoji:"🍜", img:IMG("satay beef rice noodles",144), reason:"沙嗲湯濃，牛肉嫩滑。", tip:"💡 叫少辣"},
+  {id:"nasigoreng-satay", shop:"satay", name:"印尼炒飯", price:"~$58", type:"飯", emoji:"🍚", img:IMG("indonesian nasi goreng fried rice",145), reason:"印尼風味炒飯，夠特別。", tip:"💡 趁熱食"},
+  {id:"currybeef-satay", shop:"satay", name:"咖哩牛腩飯", price:"~$60", type:"飯", spicy:1, emoji:"🍚", img:IMG("cantonese curry beef brisket rice",146), reason:"咖哩牛腩炆到腍，送飯一流。", tip:"💡 叫少辣"},
+  {id:"crossbridge-mxz", shop:"mxz", name:"過橋米線", price:"~$55", type:"麵", cheap:1, emoji:"🍜", img:IMG("crossing bridge yunnan rice noodles",147), reason:"料多，湯夠熱。", tip:"💡 先放肉，後放菜"},
+  {id:"tomatopotato-mxz", shop:"mxz", name:"蕃茄薯仔湯米線", price:"~$52", type:"麵", cheap:1, emoji:"🍜", img:IMG("tomato potato noodle soup",148), reason:"蕃茄薯仔湯，酸酸甜甜。", tip:"💡 湯唔好飲晒"},
+  {id:"chuhaubeef-mxz", shop:"mxz", name:"柱侯牛腩米線", price:"~$58", type:"麵", emoji:"🍜", img:IMG("chu hou beef brisket rice noodles",149), reason:"柱侯醬牛腩，夠入味。", tip:"💡 湯唔好飲晒"},
+  {id:"sourmixian-mxz", shop:"mxz", name:"酸辣米線（小辣）", price:"~$55", type:"麵", cheap:1, spicy:1, emoji:"🍜", img:IMG("yunnan sour spicy rice noodles",150), reason:"酸辣開胃，天熱食啱。", tip:"💡 叫小辣就好"},
+  {id:"fishball-namkee", shop:"namkee", name:"魚蛋粉", price:"~$45", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("hong kong fish ball noodle soup",151), reason:"魚蛋彈牙，湯清，唔熱氣。", tip:"💡 轉米粉河粉都得"},
+  {id:"luncheon-namkee", shop:"namkee", name:"餐蛋麵", price:"~$48", type:"麵", cheap:1, emoji:"🍜", img:IMG("hong kong luncheon meat egg noodles",152), reason:"餐蛋麵係唔會錯嘅選擇。", tip:"💡 餐肉唔好煎到燶"},
+  {id:"wonton-namkee", shop:"namkee", name:"雲吞麵", price:"~$48", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("hong kong wonton noodle soup",153), reason:"雲吞大粒，湯底清。", tip:"💡 趁熱食"},
+  {id:"beefbrisket-namkee", shop:"namkee", name:"牛腩粉麵", price:"~$55", type:"麵", emoji:"🍜", img:IMG("cantonese beef brisket noodles",154), reason:"牛腩炆到腍，粉麵吸晒湯汁。", tip:"💡 湯唔好飲晒"},
   {id:"soymilk-soymart", shop:"soymart", name:"原味豆乳", price:"~$20", type:"飲品", cheap:1, fast:1, emoji:"🥤", img:IMG("glass of fresh soybean milk",35), reason:"代替汽水，有豆味，唔係得個甜字。", tip:"💡 揀無糖／少糖"},
   {id:"soypudding-soymart", shop:"soymart", name:"豆乳布甸", price:"~$25", type:"飲品", cheap:1, emoji:"🥤", img:IMG("soybean pudding dessert",36), reason:"甜品癮發作嗰陣頂住。", tip:"💡 同正餐隔返陣先食"},
   {id:"coldbrew-tenren", shop:"tenren", name:"無糖冷泡茶", price:"~$25", type:"飲品", cheap:1, fast:1, emoji:"🥤", img:IMG("glass of cold brew tea",37), reason:"有茶味，解渴，唔甜。", tip:"💡 凍嘅更解渴"},
   {id:"milktea-tenren", shop:"tenren", name:"鮮奶茶（少糖）", price:"~$30", type:"飲品", cheap:1, emoji:"🥤", img:IMG("hong kong style milk tea",38), reason:"想飲奶茶嗰陣，少糖版。", tip:"💡 叫少冰"},
-  {id:"fishball-namkee", shop:"namkee", name:"魚蛋粉", price:"~$45", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("fish ball noodle soup",39), reason:"魚蛋彈牙，湯清，唔熱氣。", tip:"💡 轉米粉河粉都得"},
-  {id:"luncheon-namkee", shop:"namkee", name:"餐蛋麵", price:"~$48", type:"麵", cheap:1, emoji:"🍜", img:IMG("luncheon meat and egg noodles hong kong cafe",34), reason:"餐蛋麵係唔會錯嘅選擇。", tip:"💡 餐肉唔好煎到燶"},
-  {id:"corndump-bafang", shop:"bafang", name:"玉米豬肉餃（10隻）", price:"~$52", type:"飯", emoji:"🍚", img:IMG("steamed pork and corn dumplings",40), reason:"一啖一隻，唔點豉油都夠味。", tip:"💡 黑醋落少少就夠"},
-  {id:"potsticker-bafang", shop:"bafang", name:"鍋貼（5隻）", price:"~$38", type:"飯", cheap:1, emoji:"🍚", img:IMG("pan fried potstickers",41), reason:"煎到脆卜卜，頂到個脆癮。", tip:"💡 lunch唔夠飽就叫水餃"},
-  {id:"chasiu-taishing", shop:"taishing", name:"蜜汁叉燒飯", price:"~$55", type:"飯", fast:1, emoji:"🍚", img:IMG("char siu bbq pork rice cantonese style",16), reason:"叉燒蜜汁香，唔使諗。", tip:"💡 叫少汁"},
-  {id:"luncheonegg-taishing", shop:"taishing", name:"餐肉煎蛋飯", price:"~$50", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("luncheon meat and fried egg rice",42), reason:"簡單，但唔係hea。", tip:"💡 唔好加太多豉油"},
 ];
 const DISH_BY_ID = Object.fromEntries(DISHES.map(d=>[d.id,d]));
 const SWAPS = {
-  pepper:{label:"Pepper Lunch", picks:["gyudon-sukiya","beefrice-niju","chasiu-siu"]},
+  pepper:{label:"Pepper Lunch", picks:["gyudon-sukiya","shogayaki-niju","chasiu-siu"]},
   burger:{label:"漢堡包", picks:["terichick-niju","luroufan-teawood","chasiu-siu"]},
   fried:{label:"炸雞薯條", picks:["chasiu-siu","terichick-niju","gyudon-sukiya"]},
   soda:{label:"汽水", picks:["soymilk-soymart","coldbrew-tenren","milktea-tenren"]},
@@ -261,7 +287,7 @@ function updateGreeting(){
   else if(h>=11 && h<14.5) el.textContent = 'lunch time！仲未揀？㩒個掣啦';
   else el.textContent = '唔使諗，㩒個掣就有人幫你揀';
 }
-/* 全部睇晒：33 道一次過，信得過個 app */
+/* 全部睇晒：54 道一次過，信得過個 app */
 function renderBrowse(){
   const body = document.getElementById('browse-body');
   const groups = [["飯","🍚"],["麵","🍜"]];
@@ -273,7 +299,7 @@ function renderBrowse(){
         const s = SHOPS[d.shop];
         return '<div class="browse-row"><span class="be">'+d.emoji+'</span>' +
           '<div class="bi">'+brandSm(d.shop)+' ' +
-          '<span class="bn">'+d.name+'</span> <span class="bp">'+d.price+'</span></div>' +
+          '<span class="bn">'+d.name+(d.spicy?'🌶️':'')+'</span> <span class="bp">'+d.price+'</span></div>' +
           '<button class="mini-pick" onclick="browsePick(\''+d.id+'\',this)">就係佢</button></div>';
       }).join('');
   }).join('');
@@ -411,7 +437,7 @@ function dishCard(d){
     '</div>' +
     '<div class="dish-body">' +
       '<div class="dish-top">'+brand(d.shop)+'<span class="floor">'+s.floor+'</span></div>' +
-      '<div class="dish-name">'+d.name+' <span class="price">'+d.price+'</span></div>' +
+      '<div class="dish-name">'+d.name+(d.spicy?' 🌶️':'')+' <span class="price">'+d.price+'</span></div>' +
       '<div class="reason">'+d.reason+'</div>' +
       '<div class="tip">'+d.tip+'</div>' +
       '<div class="dish-actions">' +
