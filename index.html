@@ -34,7 +34,7 @@
   /* dish card */
   .dish { background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,.07); border:2px solid transparent; }
   .dish.picked { border-color:var(--green); }
-  .dish-imgwrap { position:relative; width:100%; height:150px; background:#f6efe3; }
+  .dish-imgwrap { position:relative; width:100%; aspect-ratio:4/3; background:#f6efe3; }
   .dish-imgwrap img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .45s; }
   .dish-imgwrap img.loaded { opacity:1; }
   .dish-emoji-fallback { display:flex; width:100%; height:100%; align-items:center; justify-content:center; font-size:64px; background:#f6efe3; }
@@ -173,7 +173,6 @@
   </div>
 </div>
 <input type="file" id="photo-input" accept="image/*">
-<script src="logos.js"></script>
 <script src="images.js"></script>
 <script>
 /* ================= 資料庫 v1.0：16 間舖 · 33 道菜 ================= */
@@ -390,17 +389,13 @@ function confetti(container){
 
 /* ================= 推薦卡片 ================= */
 function getPhoto(id){ try{ return JSON.parse(localStorage.getItem('lunch_photos_v1')||'{}')[id] || null; }catch(e){ return null; } }
-/* logo（有真 logo 就用圖，冇就用色 badge） */
+/* 店名 badge（之前試過真 logo，但得兩間有、又太細 — 全部用返文字） */
 function brand(shopId){
   const s = SHOPS[shopId];
-  const logo = (typeof LOGOS!=="undefined" && LOGOS[shopId]) ? LOGOS[shopId] : null;
-  if(logo) return '<span class="brand-logo"><img src="'+logo+'" alt="'+s.name+'"></span>';
   return '<span class="brand" style="background:'+s.color+'">'+s.name+'</span>';
 }
 function brandSm(shopId){
   const s = SHOPS[shopId];
-  const logo = (typeof LOGOS!=="undefined" && LOGOS[shopId]) ? LOGOS[shopId] : null;
-  if(logo) return '<span class="bs-logo"><img src="'+logo+'" alt="'+s.name+'"></span>';
   return '<span class="bs" style="background:'+s.color+'">'+s.name+'</span>';
 }
 function dishCard(d){
