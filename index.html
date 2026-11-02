@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FF8A3D">
+<title>今日食咩？ · 樂富午餐幫手</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/png;base64,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">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  :root { --orange:#FF8A3D; --orange-d:#e0632a; --cream:#FFF8F0; --ink:#333; --muted:#8a6f55; --line:#ead9c2; --green:#4CAF6D; }
+  body { font-family:-apple-system,"PingFang HK","Microsoft JhengHei",sans-serif; background:var(--cream); color:var(--ink); }
+  #app { max-width:480px; margin:0 auto; min-height:100vh; min-height:100dvh; position:relative; background:var(--cream); box-shadow:0 0 40px rgba(0,0,0,.08); }
+  .screen { display:none; flex-direction:column; padding-bottom:92px; min-height:100vh; min-height:100dvh; }
+  .screen.active { display:flex; }
+  .appbar { padding:18px 20px 14px; background:linear-gradient(135deg,#FF8A3D,#FF6B35); color:#fff; border-radius:0 0 22px 22px; position:sticky; top:0; z-index:5; }
+  .appbar h1 { font-size:24px; }
+  .appbar h1 .ver { font-size:11px; opacity:.75; font-weight:400; margin-left:6px; }
+  .appbar p { font-size:13px; opacity:.92; margin-top:2px; }
+  .body-pad { padding:16px; display:flex; flex-direction:column; gap:14px; }
+  .sec-title { font-size:14px; font-weight:700; color:var(--muted); }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { border:2px solid var(--line); background:#fff; border-radius:999px; padding:9px 15px; font-size:14px; cursor:pointer; color:#6b543c; }
+  .chip.on { background:var(--orange); border-color:var(--orange); color:#fff; font-weight:700; }
+  .chip.crave { border-style:dashed; }
+  .cta { border:none; border-radius:20px; padding:20px; font-size:22px; font-weight:800; background:linear-gradient(135deg,#FF8A3D,#FF6B35); color:#fff; cursor:pointer; box-shadow:0 8px 20px rgba(255,107,53,.4); }
+  .cta:active { transform:scale(.97); }
+  .ghost-btn { border:2px solid var(--line); background:#fff; border-radius:16px; padding:14px; font-size:16px; cursor:pointer; color:#6b543c; font-weight:600; }
+  .divider { display:flex; align-items:center; gap:10px; color:#b89b78; font-size:13px; }
+  .divider::before, .divider::after { content:""; flex:1; height:1px; background:var(--line); }
+  .hint { text-align:center; color:#a08a6d; font-size:12px; }
+  .today-banner { background:#eef9ef; border:2px solid var(--green); color:#2f7a35; border-radius:14px; padding:10px 14px; font-size:14px; font-weight:600; text-align:center; }
+  /* dish card */
+  .dish { background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,.07); border:2px solid transparent; }
+  .dish.picked { border-color:var(--green); }
+  .dish-imgwrap { position:relative; width:100%; height:150px; background:#f6efe3; }
+  .dish-imgwrap img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .45s; }
+  .dish-imgwrap img.loaded { opacity:1; }
+  .dish-emoji-fallback { display:flex; width:100%; height:100%; align-items:center; justify-content:center; font-size:64px; background:#f6efe3; }
+  .img-note { position:absolute; right:8px; bottom:6px; font-size:10px; color:#fff; background:rgba(0,0,0,.45); padding:2px 8px; border-radius:999px; }
+  .photo-btn { position:absolute; left:8px; bottom:6px; font-size:11px; color:#fff; background:rgba(0,0,0,.45); border:none; padding:4px 10px; border-radius:999px; cursor:pointer; }
+  .dish-body { padding:14px 16px 16px; display:flex; flex-direction:column; gap:8px; }
+  .dish-top { display:flex; justify-content:space-between; align-items:center; }
+  .brand { font-weight:800; font-size:13px; color:#fff; padding:5px 12px; border-radius:999px; }
+  .floor { font-size:12px; background:#f1e7da; color:var(--muted); padding:4px 10px; border-radius:999px; }
+  .dish-name { font-size:19px; font-weight:700; }
+  .price { color:var(--orange-d); font-weight:700; font-size:15px; }
+  .reason { font-size:14px; color:#5c554b; background:#f6fbf4; border-left:4px solid var(--green); padding:8px 10px; border-radius:0 10px 10px 0; }
+  .tip { font-size:13px; color:var(--muted); }
+  .dish-actions { display:flex; gap:8px; }
+  .dish-actions button { flex:1; border-radius:12px; padding:11px; font-size:15px; cursor:pointer; font-weight:700; }
+  .btn-pick { border:none; background:var(--green); color:#fff; }
+  .btn-like { border:2px solid var(--line); background:#fff; }
+  .btn-like.liked { border-color:var(--green); background:#eef9ef; }
+  .btn-dislike { border:2px solid var(--line); background:#fff; }
+  .btn-dislike.disliked { border-color:#e05252; background:#fdeeee; }
+  .reroll { border:2px dashed var(--orange); background:#fff7f0; color:var(--orange-d); border-radius:16px; padding:14px; font-size:16px; font-weight:700; cursor:pointer; }
+  /* log */
+  .streak { background:linear-gradient(135deg,#4CAF6D,#2f9e44); color:#fff; border-radius:18px; padding:16px; text-align:center; }
+  .streak .big { font-size:34px; font-weight:800; }
+  .log-item { background:#fff; border-radius:14px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,.05); gap:8px; }
+  .log-item .d { font-size:12px; color:#999; }
+  .log-item .n { font-weight:700; font-size:15px; }
+  .log-like { display:flex; gap:6px; }
+  .log-like button { border:2px solid var(--line); background:#fff; border-radius:10px; padding:6px 10px; font-size:14px; cursor:pointer; }
+  .log-like button.on-like { border-color:var(--green); background:#eef9ef; }
+  .log-like button.on-dislike { border-color:#e05252; background:#fdeeee; }
+  .rate-q { font-size:11px; color:#a08a6d; align-self:center; }
+  /* tabbar */
+  .tabbar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; background:#fff; border-top:1px solid #f0e6d6; display:flex; padding:8px 0 calc(10px + env(safe-area-inset-bottom)); z-index:10; }
+  .tabbar button { flex:1; border:none; background:none; font-size:12px; color:#a08a6d; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px; }
+  .tabbar button .e { font-size:22px; }
+  .tabbar button.on { color:var(--orange-d); font-weight:700; }
+  /* slot machine overlay */
+  #slot-overlay { position:fixed; inset:0; z-index:50; background:rgba(43,33,24,.96); display:none; flex-direction:column; align-items:center; justify-content:center; gap:22px; padding:20px; }
+  #slot-overlay.show { display:flex; }
+  #slot-overlay h2 { color:#fff; font-size:26px; }
+  #slot-overlay .sub { color:#ffd9b8; font-size:14px; }
+  .reels { display:flex; gap:14px; }
+  .reel { width:96px; height:120px; background:#fff; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:56px; box-shadow:0 6px 0 #d97a2e; transition:transform .15s; }
+  .reel.stopped { animation:pop .3s; box-shadow:0 6px 0 #4CAF6D; }
+  @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.18);} 100%{transform:scale(1);} }
+  .confetti { position:absolute; width:10px; height:14px; top:-20px; animation:fall linear forwards; border-radius:2px; }
+  @keyframes fall { to { transform:translateY(105vh) rotate(720deg); } }
+  .browse-sec { font-size:14px; font-weight:800; color:var(--muted); margin-top:4px; }
+  .browse-row { background:#fff; border-radius:14px; padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+  .browse-row .be { font-size:30px; }
+  .browse-row .bi { flex:1; min-width:0; }
+  .browse-row .bn { font-weight:700; font-size:14px; }
+  .browse-row .bs { font-size:11px; color:#fff; padding:2px 8px; border-radius:999px; }
+  .browse-row .bp { font-size:12px; color:var(--orange-d); font-weight:700; }
+  .mini-pick { border:none; background:var(--green); color:#fff; border-radius:10px; padding:8px 12px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; }
+  .mini-pick.done { background:#ccc; }
+  input[type=file] { display:none; }
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- ===== 主頁 ===== -->
+  <div class="screen active" id="s-home">
+    <div class="appbar"><h1>🍱 今日食咩？<span class="ver">v1.0</span></h1><p id="greeting">唔使諗，㩒個掣就有人幫你揀</p></div>
+    <div class="body-pad">
+      <div id="today-banner" class="today-banner" style="display:none"></div>
+      <div>
+        <div class="sec-title" style="margin-bottom:6px">有啲頭緒？（唔揀都得）</div>
+        <div class="chips" id="type-chips">
+          <button class="chip" data-type="飯" onclick="setType(this)">🍚 想食飯</button>
+          <button class="chip" data-type="麵" onclick="setType(this)">🍜 想食麵</button>
+          <button class="chip" data-type="飲品" onclick="setType(this)">🥤 飲品</button>
+        </div>
+      </div>
+      <div class="chips">
+        <button class="chip" id="chip-cheap" onclick="toggleChip('cheap')">💰 今日想慳啲</button>
+        <button class="chip" id="chip-fast" onclick="toggleChip('fast')">⏰ 趕時間，要快</button>
+      </div>
+      <button class="cta" onclick="openPick(null)">🎲 幫我揀！</button>
+      <div class="divider">或者</div>
+      <div>
+        <div class="sec-title" style="margin-bottom:6px">心思思想食…？</div>
+        <div class="chips">
+          <button class="chip crave" onclick="openPick('pepper')">🥩 Pepper Lunch</button>
+          <button class="chip crave" onclick="openPick('burger')">🍔 漢堡包</button>
+          <button class="chip crave" onclick="openPick('fried')">🍗 炸雞薯條</button>
+          <button class="chip crave" onclick="openPick('soda')">🥤 汽水</button>
+        </div>
+        <div class="hint" style="text-align:left;margin-top:6px">㩒低等 app 幫你換個冇咁熱氣嘅版本</div>
+      </div>
+      <div class="hint">前一晚／返學前揀定，lunch 就唔使煩<br>📍 樂富廣場 · 價錢係大約數，以現場為準</div>
+    </div>
+  </div>
+
+  <!-- ===== 推薦結果 ===== -->
+  <div class="screen" id="s-pick">
+    <div class="appbar"><h1 id="pick-title">🎲 開獎結果</h1><p id="pick-sub">唔啱可以再嚟過</p></div>
+    <div class="body-pad" id="dish-list"></div>
+    <div class="body-pad" style="padding-top:0">
+      <button class="reroll" onclick="openPick(state.crave)">↻ 唔啱，再嚟過</button>
+      <button class="ghost-btn" onclick="go('s-home')">← 返主頁</button>
+    </div>
+  </div>
+
+  <!-- ===== 記錄 ===== -->
+  <div class="screen" id="s-log">
+    <div class="appbar"><h1>📒 我食過咩</h1><p>今個星期</p></div>
+    <div class="body-pad" id="log-body"></div>
+  </div>
+
+  <!-- ===== 全部睇晒 ===== -->
+  <div class="screen" id="s-browse">
+    <div class="appbar"><h1>📋 睇晒有咩</h1><p>33 道，全部喺樂富廣場</p></div>
+    <div class="body-pad" id="browse-body"></div>
+  </div>
+
+  <nav class="tabbar">
+    <button class="on" id="tab-home" onclick="go('s-home')"><span class="e">🏠</span>主頁</button>
+    <button id="tab-browse" onclick="go('s-browse')"><span class="e">📋</span>全部</button>
+    <button id="tab-log" onclick="go('s-log')"><span class="e">📒</span>記錄</button>
+  </nav>
+</div>
+
+<!-- ===== 拉霸機 overlay ===== -->
+<div id="slot-overlay">
+  <h2>🎰 開獎！</h2>
+  <div class="sub" id="slot-sub">睇下今日食咩好…</div>
+  <div class="reels">
+    <div class="reel" id="reel0">🍚</div>
+    <div class="reel" id="reel1">🍜</div>
+    <div class="reel" id="reel2">🥤</div>
+  </div>
+</div>
+<input type="file" id="photo-input" accept="image/*">
+<script>
+/* ================= 資料庫 v1.0：16 間舖 · 33 道菜 ================= */
+const SHOPS = {
+  sukiya:  {name:"SUKIYA", floor:"UG層", color:"#E8730C"},
+  yoshinoya:{name:"吉野家", floor:"UG1", color:"#E60012"},
+  pulao:   {name:"蒲羅", floor:"1樓", color:"#0B8A42"},
+  siu:     {name:"燒洒一族", floor:"街市406舖", color:"#B3402A"},
+  cdc:     {name:"大家樂", floor:"UG1", color:"#008B44"},
+  teawood: {name:"茶木", floor:"1樓", color:"#7B4B2A"},
+  niju:    {name:"廿一堂", floor:"1樓", color:"#C2255C"},
+  yatjuk:  {name:"一粥麵", floor:"1樓", color:"#B8860B"},
+  tamjai:  {name:"譚仔雲南米線", floor:"UG1", color:"#D32F2F"},
+  laolao:  {name:"上海姥姥", floor:"1樓", color:"#8B0000"},
+  summer:  {name:"夏麵館", floor:"1樓", color:"#2A7DB3"},
+  okayama: {name:"岡山一番店", floor:"地下", color:"#444444"},
+  satay:   {name:"沙嗲王", floor:"1樓", color:"#E8930C"},
+  mxz:     {name:"米線陣", floor:"UG2", color:"#6A4FB3"},
+  soymart: {name:"SOYmart 豆乳狂人", floor:"1樓", color:"#A98A2F"},
+  tenren:  {name:"天仁喫茶趣", floor:"2樓", color:"#4A7C59"},
+};
+const IMG = (p, s) => "https://image.pollinations.ai/prompt/" + encodeURIComponent(p + ", appetizing food photography, overhead shot") + "?width=400&height=300&nologo=true&seed=" + s;
+const DISHES = [
+  {id:"gyudon-sukiya", shop:"sukiya", name:"牛丼（並）", price:"~$45", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("gyudon japanese beef rice bowl",11), reason:"同 Pepper Lunch 一樣牛肉撈飯，冇咁熱氣。", tip:"💡 叫少汁"},
+  {id:"kimchi-sukiya", shop:"sukiya", name:"泡菜牛丼", price:"~$52", type:"飯", fast:1, emoji:"🍚", img:IMG("kimchi beef rice bowl",12), reason:"加泡菜開胃，唔使落咁多汁。", tip:"💡 泡菜本身夠味"},
+  {id:"gyudon-yoshi", shop:"yoshinoya", name:"牛丼（並）", price:"~$45", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("gyudon japanese beef rice bowl",11), reason:"快、平、有牛肉，唔使排長龍。", tip:"💡 走青蔥都得"},
+  {id:"terichick-yoshi", shop:"yoshinoya", name:"照燒雞丼", price:"~$48", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("teriyaki chicken rice bowl",13), reason:"雞肉嫩滑，唔係炸嘢。", tip:"💡 加幾蚊轉套餐有湯"},
+  {id:"hainan-pulao", shop:"pulao", name:"海南雞飯", price:"~$60", type:"飯", emoji:"🍚", img:IMG("hainanese chicken rice",14), reason:"有肉有飯有湯，食得飽，唔熱氣。", tip:"💡 叫走雞皮"},
+  {id:"laksa-pulao", shop:"pulao", name:"叻沙", price:"~$62", type:"麵", emoji:"🍜", img:IMG("laksa noodle soup",15), reason:"想食濃味嗰日，呢個啱。", tip:"💡 湯唔好飲晒"},
+  {id:"chasiu-siu", shop:"siu", name:"叉燒飯", price:"$50以下", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("char siu bbq pork rice cantonese style",16), reason:"脆卜卜，頂到想食脆嘢嘅癮。", tip:"💡 雙拼叉燒＋白切雞"},
+  {id:"whitechk-siu", shop:"siu", name:"白切雞飯", price:"$50以下", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("poached white chicken with rice cantonese",17), reason:"滑雞唔熱氣，平靚正。", tip:"💡 薑蓉唔好點咁多"},
+  {id:"whitechk-cdc", shop:"cdc", name:"白切雞飯", price:"~$50", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("poached white chicken with rice cantonese",17), reason:"穩陣，唔使諗。", tip:"💡 唔好叫炸豬扒"},
+  {id:"porkpatty-cdc", shop:"cdc", name:"蒸肉餅飯", price:"~$48", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("steamed minced pork patty with rice",18), reason:"蒸嘢唔熱氣，送飯一流。", tip:"💡 加碟菜心"},
+  {id:"cornpork-cdc", shop:"cdc", name:"粟米肉粒飯", price:"~$46", type:"飯", cheap:1, fast:1, emoji:"🍚", img:IMG("corn and pork with rice hong kong cafe",19), reason:"有粟米有肉，唔會乾。", tip:"💡 汁撈飯啱啱好"},
+  {id:"luroufan-teawood", shop:"teawood", name:"滷肉飯＋燙青菜", price:"~$60", type:"飯", emoji:"🍚", img:IMG("taiwanese braised pork rice",20), reason:"滷肉香，配菜唔會得個肥字。", tip:"💡 滷肉汁叫少啲"},
+  {id:"chickrice-teawood", shop:"teawood", name:"雞肉飯", price:"~$58", type:"飯", emoji:"🍚", img:IMG("taiwanese shredded chicken rice",21), reason:"雞絲嫩，唔漏。", tip:"💡 加隻滷蛋"},
+  {id:"terichick-niju", shop:"niju", name:"照燒雞扒飯", price:"~$55", type:"飯", fast:1, emoji:"🍚", img:IMG("japanese teriyaki chicken with rice",22), reason:"想食肉嗰陣，呢個夠滿足。", tip:"💡 照燒汁夠味，唔使加豉油"},
+  {id:"beefrice-niju", shop:"niju", name:"牛肉飯", price:"~$55", type:"飯", fast:1, emoji:"🍚", img:IMG("gyudon japanese beef rice bowl",11), reason:"同牛丼差唔多，多個選擇。", tip:"💡 七味粉落少少"},
+  {id:"congee-yatjuk", shop:"yatjuk", name:"及第粥", price:"~$45", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("century egg and pork congee",23), reason:"熱辣辣一碗，唔會唔夠飽。", tip:"💡 加腸粉都係 $50 樓下"},
+  {id:"fishnoodle-yatjuk", shop:"yatjuk", name:"生菜魚肉湯米", price:"~$48", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("fish fillet noodle soup with lettuce",24), reason:"有湯有菜，清得嚟有味。", tip:"💡 湯底唔好飲晒"},
+  {id:"mixian-tamjai", shop:"tamjai", name:"米線（小辣）", price:"~$50", type:"麵", cheap:1, emoji:"🍜", img:IMG("yunnan mixian rice noodle soup",25), reason:"自己夾餸，唔會中伏。", tip:"💡 小辣＋加菜"},
+  {id:"tomato-tamjai", shop:"tamjai", name:"蕃茄湯米線", price:"~$52", type:"麵", cheap:1, emoji:"🍜", img:IMG("tomato noodle soup",27), reason:"蕃茄湯開胃，唔食辣都得。", tip:"💡 唔辣就揀蕃茄湯底"},
+  {id:"xuecai-laolao", shop:"laolao", name:"雪菜肉絲麵", price:"~$55", type:"麵", emoji:"🍜", img:IMG("noodles with pickled mustard greens and shredded pork",28), reason:"夠鑊氣，唔係炸嘢都好味。", tip:"💡 湯麵比拌麵少油"},
+  {id:"wonton-laolao", shop:"laolao", name:"菜肉餛飩", price:"~$52", type:"麵", emoji:"🍜", img:IMG("shanghai wonton soup",29), reason:"一啖一隻，好味又唔漏。", tip:"💡 湯唔好飲晒"},
+  {id:"yangchun-summer", shop:"summer", name:"陽春麵", price:"~$40", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("plain noodles in clear broth",30), reason:"平、快，簡簡單單。", tip:"💡 加菜肉餛飩都唔貴"},
+  {id:"xuecai-summer", shop:"summer", name:"雪菜肉絲麵", price:"~$50", type:"麵", cheap:1, emoji:"🍜", img:IMG("noodles with pickled mustard greens and shredded pork",28), reason:"雪菜開胃，唔會口淡淡。", tip:"💡 湯唔好飲晒"},
+  {id:"tonkotsu-okayama", shop:"okayama", name:"豚骨拉麵", price:"~$65", type:"麵", emoji:"🍜", img:IMG("tonkotsu ramen",31), reason:"拉麵癮發作嘅正路選擇。", tip:"💡 湯唔好飲晒，留返半碗"},
+  {id:"shoyu-okayama", shop:"okayama", name:"醬油拉麵", price:"~$65", type:"麵", emoji:"🍜", img:IMG("shoyu ramen",32), reason:"比豚骨清，唔會咁漏。", tip:"💡 加隻糖心蛋"},
+  {id:"tomatopork-satay", shop:"satay", name:"鮮茄豬扒通粉", price:"~$55", type:"麵", emoji:"🍜", img:IMG("tomato pork chop macaroni soup hong kong style",33), reason:"茄汁開胃，唔漏。", tip:"💡 豬扒叫煎唔叫炸"},
+  {id:"luncheon-satay", shop:"satay", name:"餐蛋麵", price:"~$50", type:"麵", cheap:1, fast:1, emoji:"🍜", img:IMG("luncheon meat and egg noodles hong kong cafe",34), reason:"簡單，但唔係hea。", tip:"💡 餐肉唔好煎到燶"},
+  {id:"crossbridge-mxz", shop:"mxz", name:"過橋米線", price:"~$52", type:"麵", cheap:1, emoji:"🍜", img:IMG("crossing bridge yunnan rice noodles",26), reason:"料多，湯夠熱。", tip:"💡 先放肉，後放菜"},
+  {id:"sourmixian-mxz", shop:"mxz", name:"酸辣米線（小辣）", price:"~$52", type:"麵", cheap:1, emoji:"🍜", img:IMG("yunnan mixian rice noodle soup",25), reason:"酸辣開胃，天熱食啱。", tip:"💡 叫小辣就好"},
+  {id:"soymilk-soymart", shop:"soymart", name:"原味豆乳", price:"~$20", type:"飲品", cheap:1, fast:1, emoji:"🥤", img:IMG("glass of fresh soybean milk",35), reason:"代替汽水，有豆味，唔係得個甜字。", tip:"💡 揀無糖／少糖"},
+  {id:"soypudding-soymart", shop:"soymart", name:"豆乳布甸", price:"~$25", type:"飲品", cheap:1, emoji:"🥤", img:IMG("soybean pudding dessert",36), reason:"甜品癮發作嗰陣頂住。", tip:"💡 同正餐隔返陣先食"},
+  {id:"coldbrew-tenren", shop:"tenren", name:"無糖冷泡茶", price:"~$25", type:"飲品", cheap:1, fast:1, emoji:"🥤", img:IMG("glass of cold brew tea",37), reason:"有茶味，解渴，唔甜。", tip:"💡 凍嘅更解渴"},
+  {id:"milktea-tenren", shop:"tenren", name:"鮮奶茶（少糖）", price:"~$30", type:"飲品", cheap:1, emoji:"🥤", img:IMG("hong kong style milk tea",38), reason:"想飲奶茶嗰陣，少糖版。", tip:"💡 叫少冰"},
+];
+const DISH_BY_ID = Object.fromEntries(DISHES.map(d=>[d.id,d]));
+const SWAPS = {
+  pepper:{label:"Pepper Lunch", picks:["gyudon-sukiya","gyudon-yoshi","chasiu-siu"]},
+  burger:{label:"漢堡包", picks:["terichick-niju","luroufan-teawood","chasiu-siu"]},
+  fried:{label:"炸雞薯條", picks:["chasiu-siu","terichick-niju","gyudon-sukiya"]},
+  soda:{label:"汽水", picks:["soymilk-soymart","coldbrew-tenren","milktea-tenren"]},
+};
+const state = { type:null, cheap:false, fast:false, crave:null, picks:[] };
+
+/* ================= 導航 ================= */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('tab-home').classList.toggle('on', id==='s-home');
+  document.getElementById('tab-log').classList.toggle('on', id==='s-log');
+  document.getElementById('tab-browse').classList.toggle('on', id==='s-browse');
+  if(id==='s-log') renderLog();
+  if(id==='s-browse') renderBrowse();
+  if(id==='s-home'){ renderTodayBanner(); updateGreeting(); }
+  window.scrollTo(0,0);
+}
+/* 朝早問候：返學前開 app 就提佢揀定 lunch */
+function updateGreeting(){
+  const h = new Date().getHours(), el = document.getElementById('greeting');
+  if(!el) return;
+  if(h>=5 && h<11) el.textContent = '早晨！今日 lunch 揀定未？';
+  else if(h>=11 && h<14.5) el.textContent = 'lunch time！仲未揀？㩒個掣啦';
+  else el.textContent = '唔使諗，㩒個掣就有人幫你揀';
+}
+/* 全部睇晒：33 道一次過，信得過個 app */
+function renderBrowse(){
+  const body = document.getElementById('browse-body');
+  const groups = [["飯","🍚"],["麵","🍜"],["飲品","🥤"]];
+  body.innerHTML = groups.map(([t,em])=>{
+    const items = DISHES.filter(d=>d.type===t);
+    return '<div class="browse-sec">'+em+' '+t+'（'+items.length+'）</div>' +
+      items.map(d=>{
+        const s = SHOPS[d.shop];
+        return '<div class="browse-row"><span class="be">'+d.emoji+'</span>' +
+          '<div class="bi"><span class="bs" style="background:'+s.color+'">'+s.name+'</span> ' +
+          '<span class="bn">'+d.name+'</span> <span class="bp">'+d.price+'</span></div>' +
+          '<button class="mini-pick" onclick="browsePick(\''+d.id+'\',this)">就係佢</button></div>';
+      }).join('');
+  }).join('');
+}
+function browsePick(id, btn){
+  logMeal(id, 0);
+  btn.textContent = '✓ 揀咗'; btn.classList.add('done');
+  blip(880, 0.2);
+  renderTodayBanner();
+}
+function setType(btn){
+  const on = btn.classList.contains('on');
+  document.querySelectorAll('#type-chips .chip').forEach(b=>b.classList.remove('on'));
+  if(!on){ btn.classList.add('on'); state.type = btn.dataset.type; } else state.type = null;
+}
+function toggleChip(k){
+  state[k] = !state[k];
+  document.getElementById(k==='cheap'?'chip-cheap':'chip-fast').classList.toggle('on', state[k]);
+}
+
+/* ================= 音效（WebAudio，無需外部檔） ================= */
+let _actx = null;
+function blip(freq, dur){
+  try{
+    _actx = _actx || new (window.AudioContext||window.webkitAudioContext)();
+    const o = _actx.createOscillator(), g = _actx.createGain();
+    o.connect(g); g.connect(_actx.destination);
+    o.frequency.value = freq; o.type = 'sine';
+    g.gain.setValueAtTime(0.09, _actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, _actx.currentTime + dur);
+    o.start(); o.stop(_actx.currentTime + dur + 0.02);
+  }catch(e){}
+}
+
+/* ================= 拉霸機開獎動畫 ================= */
+const SLOT_EMOJIS = ["🍚","🍜","🥤","🍱","🍛","🍣","🥟","🍝","🍲","🍤","🍗","🥩"];
+function isoDate(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+/* 30日內 👎 過嘅唔推；唔夠3個揀嗰陣自動唔踢，唔會㩒到無晒 */
+function dislikedIds(){
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate()-30);
+  const cut = isoDate(cutoff), bad = new Set();
+  getLog().forEach(e=>{ if(e.like===-1 && e.d >= cut) bad.add(e.dish); });
+  return bad;
+}
+function pool(){
+  let p;
+  if(state.crave) p = SWAPS[state.crave].picks.map(id=>DISH_BY_ID[id]);
+  else {
+    p = state.type ? DISHES.filter(d=>d.type===state.type) : DISHES.filter(d=>d.type!=="飲品");
+    if(state.cheap) p = p.filter(d=>d.cheap);
+    if(state.fast) p = p.filter(d=>d.fast);
+    if(!p.length) p = DISHES.filter(d=>d.type!=="飲品");
+  }
+  const bad = dislikedIds();
+  const filtered = p.filter(d=>!bad.has(d.id));
+  return filtered.length >= 3 ? filtered : p;
+}
+function openPick(crave){
+  state.crave = crave;
+  /* iOS：AudioContext 要喺 click gesture 入面開，唔係之後會無聲 */
+  try{ _actx=_actx||new (window.AudioContext||window.webkitAudioContext)(); if(_actx.state==='suspended') _actx.resume(); }catch(e){}
+  let picks = [...pool()].sort(()=>Math.random()-.5).slice(0,3);
+  if(picks.length<3){ /* 保底：唔夠3個就補，唔會開天窗 */
+    const filler = DISHES.filter(d=>!picks.includes(d)).sort(()=>Math.random()-.5);
+    picks = picks.concat(filler.slice(0, 3-picks.length));
+  }
+  state.picks = picks;
+  runSlot(picks, ()=>{
+    renderDishes(picks);
+    go('s-pick');
+  });
+}
+function runSlot(picks, done){
+  const ov = document.getElementById('slot-overlay');
+  document.getElementById('slot-sub').textContent = state.crave
+    ? "心思思「" + SWAPS[state.crave].label + "」？睇下有咩替代…"
+    : "睇下今日食咩好…";
+  ov.classList.add('show');
+  const reels = [0,1,2].map(i=>document.getElementById('reel'+i));
+  reels.forEach(r=>r.classList.remove('stopped'));
+  const timers = reels.map((r,i)=>{
+    r.textContent = SLOT_EMOJIS[i*4 % SLOT_EMOJIS.length];
+    return setInterval(()=>{ r.textContent = SLOT_EMOJIS[Math.floor(Math.random()*SLOT_EMOJIS.length)]; }, 75);
+  });
+  const stopAt = [700, 1200, 1700];
+  picks.forEach((d,i)=>{
+    setTimeout(()=>{
+      clearInterval(timers[i]);
+      const dd = picks[i % picks.length];
+      reels[i].textContent = dd.emoji;
+      reels[i].classList.add('stopped');
+      blip(i===2 ? 880 : 620, 0.14);
+    }, stopAt[i]);
+  });
+  setTimeout(()=>{
+    confetti(ov);
+    blip(1040, 0.25);
+  }, 1750);
+  setTimeout(()=>{ ov.classList.remove('show'); ov.querySelectorAll('.confetti').forEach(c=>c.remove()); done(); }, 2150);
+}
+function confetti(container){
+  const colors = ["#FF8A3D","#4CAF6D","#FFD93D","#6BCBFF","#FF6B9D","#fff"];
+  for(let i=0;i<28;i++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random()*100 + '%';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = (1.4 + Math.random()*1.2) + 's';
+    c.style.animationDelay = (Math.random()*0.4) + 's';
+    container.appendChild(c);
+  }
+}
+
+/* ================= 推薦卡片 ================= */
+function getPhoto(id){ try{ return JSON.parse(localStorage.getItem('lunch_photos_v1')||'{}')[id] || null; }catch(e){ return null; } }
+function dishCard(d){
+  const s = SHOPS[d.shop];
+  const photo = getPhoto(d.id);
+  const src = photo || d.img;
+  return '<div class="dish" id="dish-'+d.id+'">' +
+    '<div class="dish-imgwrap">' +
+      '<div class="dish-emoji-fallback">'+d.emoji+'</div>' +
+      '<img loading="lazy" src="'+src+'" alt="'+d.name+'" onload="this.classList.add(\'loaded\')" onerror="this.classList.remove(\'loaded\')">' +
+      '<button class="photo-btn" onclick="changePhoto(\''+d.id+'\')">📷 換相</button>' +
+      '<span class="img-note">圖片僅供參考</span>' +
+    '</div>' +
+    '<div class="dish-body">' +
+      '<div class="dish-top"><span class="brand" style="background:'+s.color+'">'+s.name+'</span><span class="floor">'+s.floor+'</span></div>' +
+      '<div class="dish-name">'+d.name+' <span class="price">'+d.price+'</span></div>' +
+      '<div class="reason">'+d.reason+'</div>' +
+      '<div class="tip">'+d.tip+'</div>' +
+      '<div class="dish-actions">' +
+        '<button class="btn-pick" onclick="pickDish(\''+d.id+'\',this)">就係佢！</button>' +
+      '</div>' +
+    '</div></div>';
+}
+function renderDishes(picks){
+  if(state.crave){
+    document.getElementById('pick-title').textContent = "🔄 幫你換咗";
+    document.getElementById('pick-sub').textContent = "你心思思「"+SWAPS[state.crave].label+"」，呢啲一樣咁正，冇咁熱氣";
+  } else {
+    document.getElementById('pick-title').textContent = "🎲 開獎結果";
+    document.getElementById('pick-sub').textContent = "唔啱可以再嚟過";
+  }
+  document.getElementById('dish-list').innerHTML = picks.map(dishCard).join('');
+}
+function pickDish(id, btn){
+  const card = btn.closest('.dish');
+  card.classList.add('picked');
+  btn.textContent = '✓ 就係佢！';
+  logMeal(id, 0);
+  blip(880, 0.2);
+  renderTodayBanner();
+}
+/* ================= 打卡記錄 ================= */
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function getLog(){ try{ return JSON.parse(localStorage.getItem('lunch_log_v1')||'[]'); }catch(e){ return []; } }
+function saveLog(l){ try{ localStorage.setItem('lunch_log_v1', JSON.stringify(l.slice(-60))); }catch(e){} }
+function logMeal(dishId, like){
+  const t = todayStr(), log = getLog();
+  /* 揀得返即係個 👎 過咗期，清咗佢，唔好自己阻住自己 */
+  if(like===0) log.forEach(e=>{ if(e.dish===dishId && e.like===-1) e.like=0; });
+  const ex = log.find(e=>e.d===t && e.dish===dishId);
+  if(ex){ ex.like = like; } else { log.push({d:t, dish:dishId, like:like}); }
+  saveLog(log);
+}
+/* 打卡（揀咗）同評分（好唔好食）係兩個 concept：評分只喺記錄度做，食完先評 */
+function setLike(dateStr, dishId, v){
+  const log = getLog();
+  const ex = log.find(e=>e.d===dateStr && e.dish===dishId);
+  if(ex){ ex.like = (ex.like===v ? 0 : v); saveLog(log); }
+  renderLog();
+}
+function streak(){
+  const days = new Set(getLog().map(e=>e.d));
+  let n = 0, d = new Date();
+  if(!days.has(todayStr())) d.setDate(d.getDate()-1);
+  while(true){
+    const k = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    if(days.has(k)){ n++; d.setDate(d.getDate()-1); } else break;
+  }
+  return n;
+}
+function weekdayStr(ds){ return ["日","一","二","三","四","五","六"][new Date(ds+'T12:00:00').getDay()]; }
+function renderTodayBanner(){
+  const b = document.getElementById('today-banner');
+  const t = getLog().filter(e=>e.d===todayStr());
+  if(t.length){
+    const d = DISH_BY_ID[t[t.length-1].dish];
+    b.style.display = 'block';
+    b.textContent = '✓ 今日揀咗：' + SHOPS[d.shop].name + ' ' + d.name;
+  } else b.style.display = 'none';
+}
+function renderLog(){
+  const body = document.getElementById('log-body');
+  const log = getLog().slice().reverse().slice(0,14);
+  const st = streak();
+  let html = '<div class="streak"><div class="big">🔥 '+st+' 日</div><div>連續有揀 lunch！keep 住！</div></div>';
+  if(!log.length) html += '<div class="hint">未有記錄，聽日開始打卡啦</div>';
+  html += log.map(e=>{
+    const d = DISH_BY_ID[e.dish]; if(!d) return '';
+    const s = SHOPS[d.shop];
+    const q = e.like===0 ? '<span class="rate-q">好唔好食？</span>' : '';
+    return '<div class="log-item"><div><div class="n">'+s.name+' · '+d.name+'</div><div class="d">'+e.d.slice(5).replace('-','/')+'（'+weekdayStr(e.d)+'）</div></div>' +
+      '<div class="log-like">'+q+'<button class="'+(e.like===1?'on-like':'')+'" onclick="setLike(\''+e.d+'\',\''+e.dish+'\',1)">👍</button>' +
+      '<button class="'+(e.like===-1?'on-dislike':'')+'" onclick="setLike(\''+e.d+'\',\''+e.dish+'\',-1)">👎</button></div></div>';
+  }).join('');
+  html += '<div class="hint">👎 嘅嘢 30 日內唔會再推俾你，隨時㩒返轉頭改得返</div>';
+  body.innerHTML = html;
+}
+
+/* ================= 📷 換相 ================= */
+let photoTarget = null;
+function changePhoto(dishId){
+  photoTarget = dishId;
+  document.getElementById('photo-input').click();
+}
+document.getElementById('photo-input').addEventListener('change', function(){
+  const f = this.files[0]; if(!f || !photoTarget) return;
+  const rd = new FileReader();
+  rd.onload = ()=>{
+    const img = new Image();
+    img.onload = ()=>{
+      const max = 800, sc = Math.min(1, max / Math.max(img.width, img.height));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(img.width*sc); cv.height = Math.round(img.height*sc);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      const url = cv.toDataURL('image/jpeg', 0.82);
+      try{
+        const all = JSON.parse(localStorage.getItem('lunch_photos_v1')||'{}');
+        all[photoTarget] = url;
+        localStorage.setItem('lunch_photos_v1', JSON.stringify(all));
+        const wrap = document.querySelector('#dish-'+photoTarget+' .dish-imgwrap');
+        if(wrap){ const im = wrap.querySelector('img'); if(im){ im.src = url; im.classList.add('loaded'); } }
+      }catch(e){ alert('張相太大，存唔到，試下影細張啲'); }
+      photoTarget = null;
+    };
+    img.src = rd.result;
+  };
+  rd.readAsDataURL(f);
+  this.value = '';
+});
+
+/* ================= PWA ================= */
+if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
+  window.addEventListener('load', ()=> navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+renderTodayBanner();
+updateGreeting();
+</script>
+</body>
+</html>
